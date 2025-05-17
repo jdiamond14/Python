@@ -12,9 +12,7 @@ templates = Jinja2Templates(directory="templates")
 ###Start weather app
 @app.get("/weather", response_class=HTMLResponse)
 def get_weather(request: Request):
-    #flip this back when going to prod (it pulls localhost which cannot be geocoded so we hardcode a real ip)
-    #ip = request.client.host
-    ip = "107.128.162.44"
+    ip = request.client.host
     geocoded_ip = geocoder.ip(ip)
     coor = geocoded_ip.latlng
     if coor:  # Ensure coor is not None
