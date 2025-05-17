@@ -5,6 +5,7 @@ from datetime import datetime
 import json
 import requests
 import geocoder
+import ssl
 
 app = FastAPI()
 templates = Jinja2Templates(directory="templates")
