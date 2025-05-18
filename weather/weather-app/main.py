@@ -9,6 +9,9 @@ import ssl
 
 app = FastAPI()
 templates = Jinja2Templates(directory="templates")
+# Enable SSL eventually
+#ssl_context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
+#ssl_context.load_cert_chain('/cert/cert.pem', keyfile='/cert/key.pem')
 
 ###Start weather app
 @app.get("/weather", response_class=HTMLResponse)
@@ -35,33 +38,3 @@ def get_weather(request: Request):
         )
     else:
         return {"error": "Could not determine coordinates"}
-
-
-#test endpoints
-@app.get("/get-message")
-def hello():
-    return {"Message": "You can modify the following string by using the /add, /change, and /remove endpoints: " + static_string}
-
-#Initial static string
-static_string = "What?"
-
-@app.post("/add")
-async def add_text(text: str):
-    global static_string
-    static_string += text
-    return {"message": "Text added successfully", "current_string": static_string}
-
-@app.put("/change")
-async def change_text(new_text: str):
-    global static_string
-    static_string = new_text
-    return {"message": "Text changed successfully", "current_string": static_string}
-
-@app.delete("/remove")
-async def remove_text():
-    global static_string
-    static_string = ""
-    return {"message": "Text removed successfully"}
-
-
-
